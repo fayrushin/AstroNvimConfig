@@ -58,7 +58,7 @@ local config = {
             ["r"] = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
             ["s"] = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
             ["q"] = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
-            ["x"] = { "<cmd>lua require'dapui'.toggle()<CR>", "Toggle debug UI" }
+            ["x"] = { "<cmd>lua require'dapui'.toggle()<CR>", "Toggle debug UI" },
           },
           ["b"] = {
             name = "CMake",
@@ -75,14 +75,22 @@ local config = {
           ["n"] = {
             name = "Hop",
             ["n"] = { "<cmd> HopChar1 <cr>", "Hop one char" },
-            ["h"] = { "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = false })<cr>",
-              "Hop before cursor" },
-            ["l"] = { "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = false })<cr>",
-              "Hop after cursor" },
-            ["j"] = { "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-              "Hop line before cursor" },
-            ["k"] = { "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
-              "Hop line after cursor" },
+            ["h"] = {
+              "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = false })<cr>",
+              "Hop before cursor",
+            },
+            ["l"] = {
+              "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = false })<cr>",
+              "Hop after cursor",
+            },
+            ["j"] = {
+              "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
+              "Hop line before cursor",
+            },
+            ["k"] = {
+              "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
+              "Hop line after cursor",
+            },
           },
           ["a"] = {
             name = "Diagnostics",
@@ -92,7 +100,7 @@ local config = {
             q = { "<cmd>Trouble quickfix<cr>", "quickfix" },
             l = { "<cmd>Trouble loclist<cr>", "loclist" },
             r = { "<cmd>Trouble lsp_references<cr>", "references" },
-          }
+          },
         },
       },
     },
@@ -114,31 +122,27 @@ local config = {
         "phaazon/hop.nvim",
         config = function()
           -- you can configure Hop the way you like here; see :h hop-config
-          require 'hop'.setup { keys = 'etovxqpdygfblzhckisuran' }
-        end
+          require("hop").setup { keys = "etovxqpdygfblzhckisuran" }
+        end,
       },
 
       {
         "nvim-telescope/telescope-ui-select.nvim",
         after = "telescope.nvim",
-        config = function()
-          require('telescope').load_extension('ui-select')
-        end,
+        config = function() require("telescope").load_extension "ui-select" end,
       },
       {
-        "fayrushin/vscode.nvim"
+        "fayrushin/vscode.nvim",
       },
       {
         "catppuccin/nvim",
         as = "catppuccin",
-        config = function()
-          require("catppuccin").setup {}
-        end,
+        config = function() require("catppuccin").setup {} end,
       },
       {
-        'mfussenegger/nvim-dap',
+        "mfussenegger/nvim-dap",
         config = function()
-          local dap = require('dap')
+          local dap = require "dap"
           dap.adapters = {
             python = {
               type = "executable",
@@ -152,10 +156,10 @@ local config = {
               command = "OpenDebugAD7",
             },
             lldb = {
-              type = 'executable',
-              command = '/usr/lib/llvm-14/bin/lldb-vscode', -- adjust as needed, must be absolute path
-              name = 'lldb'
-            }
+              type = "executable",
+              command = "/usr/lib/llvm-14/bin/lldb-vscode", -- adjust as needed, must be absolute path
+              name = "lldb",
+            },
           }
           dap.configurations = {
             python = {
@@ -164,9 +168,7 @@ local config = {
                 request = "launch",
                 name = "Launch file",
                 program = "${file}",
-                pythonPath = function()
-                  return "/usr/bin/python3"
-                end,
+                pythonPath = function() return "/usr/bin/python3" end,
               },
             },
             cpp = {
@@ -174,17 +176,15 @@ local config = {
                 name = "Launch file",
                 type = "cppdbg",
                 request = "launch",
-                program = function()
-                  return vim.fn.input("Path to executable: ", vim.fn.expand "%:p" .. "/", "file")
-                end,
+                program = function() return vim.fn.input("Path to executable: ", vim.fn.expand "%:p" .. "/", "file") end,
                 cwd = "${workspaceFolder}",
                 stopOnEntry = true,
                 setupCommands = {
                   {
                     description = "Enable pretty-printing",
                     text = "-enable-pretty-printing",
-                    ignoreFailures = false
-                  }
+                    ignoreFailures = false,
+                  },
                 },
                 runInTerminal = true,
               },
@@ -209,9 +209,7 @@ local config = {
           vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DiagnosticError" })
           vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DiagnosticInfo" })
           vim.fn.sign_define("DapLogPoint", { text = ".>", texthl = "DiagnosticInfo" })
-
-        end
-
+        end,
       },
       {
         "rcarriga/nvim-dap-ui",
@@ -255,36 +253,35 @@ local config = {
             windows = { indent = 1 },
           }
           -- add listeners to auto open DAP UI
-          dap.listeners.after.event_initialized["dapui_config"] = function()
-            dapui.open()
-          end
-          dap.listeners.before.event_terminated["dapui_config"] = function()
-            dapui.close()
-          end
-          dap.listeners.before.event_exited["dapui_config"] = function()
-            dapui.close()
-          end
+          dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
+          -- dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
+          -- dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
         end,
       },
       {
         "theHamsta/nvim-dap-virtual-text",
         after = "nvim-dap",
-        config = function()
-          require("nvim-dap-virtual-text").setup()
-        end,
+        config = function() require("nvim-dap-virtual-text").setup() end,
       },
       {
         "Shatur/neovim-cmake",
         after = "nvim-dap-ui",
         -- commit = "536987ef1fcbe7209ca3f243495603a5f1c250a7",
         config = function()
-          require('cmake').setup {
-            parameters_file = 'neovim.json',
-            configure_args = { '-D', 'CMAKE_EXPORT_COMPILE_COMMANDS=1' },
-            build_args = { '-j 8' },
+          require("cmake").setup {
+            cmake_executable = "cmake",
+            save_before_build = true,
+            parameters_file = "neovim.json",
+            configure_args = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" },
+            build_args = { "-j 8" },
+            quickfix = {
+              pos = "botright", -- Where to open quickfix
+              height = 10, -- Height of the opened quickfix.
+              only_on_error = false, -- Open quickfix window only if target build failed.
+            },
             dap_configuration = {
-              type = 'lldb',
-              request = 'launch',
+              type = "lldb",
+              request = "launch",
               -- setupCommands = {
               --   {
               --     description = "Enable pretty-printing",
@@ -294,7 +291,7 @@ local config = {
               -- },
               runInTerminal = false,
               stopOnEntry = false,
-              args = {},
+              -- args = { "-h" },
             },
             dap_open_command = false,
             -- dap_open_command = require('dap').repl.open,
@@ -302,7 +299,6 @@ local config = {
           }
         end,
       },
-
     },
     treesitter = {
       ensure_installed = { "lua", "cpp", "python", "cmake", "rust", "bash", "c", "json" },
@@ -310,7 +306,29 @@ local config = {
     ["nvim-lsp-installer"] = {
       ensure_installed = { "sumneko_lua", "clangd", "pyright", "cmake", "jsonls" },
     },
-
+    ["null-ls"] = function(config)
+      local null_ls = require "null-ls"
+      config.sources = {
+        -- Set a formatter
+        null_ls.builtins.formatting.black,
+        null_ls.builtins.formatting.stylua,
+        null_ls.builtins.formatting.jq,
+        -- Set a linter
+        -- null_ls.builtins.diagnostics.flake8,
+      }
+      -- set up null-ls's on_attach function
+      config.on_attach = function(client)
+        -- NOTE: You can remove this on attach function to disable format on save
+        if client.resolved_capabilities.document_formatting then
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            desc = "Auto format before save",
+            pattern = "<buffer>",
+            callback = vim.lsp.buf.formatting_sync,
+          })
+        end
+      end
+      return config -- return final config table
+    end,
   },
 
   -- Diagnostics configuration (for vim.diagnostics.config({}))
@@ -325,9 +343,7 @@ local config = {
       -- setting a mapping to false will disable it
       ["<leader>d"] = false,
     },
-
   },
-
 }
 
 return config
