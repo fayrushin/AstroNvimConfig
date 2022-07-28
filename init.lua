@@ -103,6 +103,10 @@ local config = {
     -- Add plugins, the packer syntax without the "use"
     init = {
       {
+        "iamcco/markdown-preview.nvim",
+        run = function() vim.fn["mkdp#util#install"]() end,
+      },
+      {
         "folke/trouble.nvim",
         cmd = "TroubleToggle",
       },
