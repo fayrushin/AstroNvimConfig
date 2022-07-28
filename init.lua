@@ -307,6 +307,9 @@ local config = {
     treesitter = {
       ensure_installed = { "lua", "cpp", "python", "cmake", "rust", "bash", "c", "json" },
     },
+    ["nvim-lsp-installer"] = {
+      ensure_installed = { "sumneko_lua", "clangd", "pyright", "cmake", "jsonls" },
+    },
 
   },
 
