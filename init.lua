@@ -5,7 +5,7 @@ local config = {
     remote = "origin", -- remote to use
     channel = "nightly", -- "stable" or "nightly"
     version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-    branch = "mason", -- branch name (NIGHTLY ONLY)
+    branch = "main", -- branch name (NIGHTLY ONLY)
     commit = nil, -- commit hash (NIGHTLY ONLY)
     pin_plugins = nil, -- nil, true, false (nil will pin plugins on stable only)
     skip_prompts = false, -- skip prompts about breaking changes
@@ -60,6 +60,7 @@ local config = {
             ["q"] = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
             ["x"] = { "<cmd>lua require'dapui'.toggle()<CR>", "Toggle debug UI" },
           },
+          ["r"] = { "<cmd>RunCode<cr>", "Run code" },
           ["b"] = {
             name = "CMake",
             ["n"] = { "<cmd>CMake create_project<cr>", "Create new project" },
@@ -110,6 +111,20 @@ local config = {
   plugins = {
     -- Add plugins, the packer syntax without the "use"
     init = {
+      {
+        "CRAG666/code_runner.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        config = function()
+          require("code_runner").setup {
+            filetype = {
+              java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
+              python = "python3 -u",
+              typescript = "deno run",
+              rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
+            },
+          }
+        end,
+      },
       {
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
