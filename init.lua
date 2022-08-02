@@ -359,6 +359,17 @@ local config = {
       ["<leader>d"] = false,
     },
   },
+
+  polish = function()
+    local map = vim.keymap.set
+    local unmap = vim.keymap.del
+
+    unmap("t", "<esc>")
+    unmap("t", "jk")
+
+    map("t", "<c-q>", "<c-\\><c-n>", { desc = "Terminal normal mode" })
+    -- map("t", "<esc><esc>", "<c-\\><c-n>:q<cr>", { desc = "Terminal quit" })
+  end,
 }
 
 return config
