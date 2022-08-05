@@ -1,6 +1,7 @@
 # Install AstroNvim with my config
 
 This config supports:
+
 1. C/CPP
 2. CMake
 3. Python
@@ -21,22 +22,18 @@ This config supports:
 
 `go install github.com/jesseduffield/lazygit@latest`
 
-7. stylua
+7. debugpy
 
-`cargo install stylua`
+`pip install debugpy`
 
-8. black
-
-`pip install black`
-
-9. nvm + node
+8. nvm + node
 
 ```
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash`
 nvm install node
 ```
 
-10. nvim
+9. nvim
 
 download form [github](https://github.com/neovim/neovim/releases)
 
@@ -52,6 +49,4 @@ Clone my own config to lua user dir
 
 Initialize nvim
 
-`nvim  --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'`
-
-
+`nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'`

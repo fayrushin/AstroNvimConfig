@@ -106,11 +106,36 @@ local config = {
       },
     },
   },
+  -- lsp = {
+  --   servers = {
+  --     "pyright",
+  --   },
+  --   ["server-settings"] = {
+  --     pyright = {
+  --       {
+  --         analysis = {
+  --           autoSearchPaths = true,
+  --           diagnosticMode = "openFilesOnly",
+  --           useLibraryCodeForTypes = true,
+  --           typeCheckingMode = "basic",
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 
   -- Configure plugins
   plugins = {
     -- Add plugins, the packer syntax without the "use"
     init = {
+      -- {
+      --   "tanvirtin/vgit.nvim",
+      --   requires = {
+      --     "nvim-lua/plenary.nvim",
+      --   },
+      --   config = function() require("vgit").setup() end,
+      -- },
+      -- { "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
       {
         "CRAG666/code_runner.nvim",
         requires = "nvim-lua/plenary.nvim",
@@ -318,8 +343,11 @@ local config = {
     treesitter = {
       ensure_installed = { "lua", "cpp", "python", "cmake", "rust", "bash", "c", "json" },
     },
-    ["nvim-lsp-installer"] = {
-      ensure_installed = { "sumneko_lua", "clangd", "pyright", "cmake", "jsonls" },
+    ["mason-lspconfig"] = {
+      ensure_installed = { "marksman", "sumneko_lua", "clangd", "pyright", "cmake", "jsonls" },
+    },
+    ["mason-tool-installer"] = {
+      ensure_installed = { "stylua", "black", "jq", "prettier" },
     },
     ["null-ls"] = function(config)
       local null_ls = require "null-ls"
@@ -328,6 +356,7 @@ local config = {
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.jq,
+        null_ls.builtins.formatting.prettier,
         -- Set a linter
         -- null_ls.builtins.diagnostics.flake8,
       }
