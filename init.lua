@@ -345,7 +345,7 @@ local config = {
       ensure_installed = { "lua", "cpp", "python", "cmake", "rust", "bash", "c", "json" },
     },
     ["mason-lspconfig"] = {
-      ensure_installed = { "marksman", "sumneko_lua", "clangd", "pyright", "cmake", "jsonls" },
+      ensure_installed = { "marksman", "sumneko_lua", "pyright", "cmake", "jsonls" },
     },
     ["mason-tool-installer"] = {
       ensure_installed = { "stylua", "black", "jq", "prettier" },
