@@ -106,23 +106,24 @@ local config = {
       },
     },
   },
-  -- lsp = {
-  --   servers = {
-  --     "pyright",
-  --   },
-  --   ["server-settings"] = {
-  --     pyright = {
-  --       {
-  --         analysis = {
-  --           autoSearchPaths = true,
-  --           diagnosticMode = "openFilesOnly",
-  --           useLibraryCodeForTypes = true,
-  --           typeCheckingMode = "basic",
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
+  lsp = {
+    servers = {
+      "clangd",
+      -- "pyright",
+    },
+    -- ["server-settings"] = {
+    --   pyright = {
+    --     {
+    --       analysis = {
+    --         autoSearchPaths = true,
+    --         diagnosticMode = "openFilesOnly",
+    --         useLibraryCodeForTypes = true,
+    --         typeCheckingMode = "basic",
+    --       },
+    --     },
+    --   },
+    -- },
+  },
 
   -- Configure plugins
   plugins = {
