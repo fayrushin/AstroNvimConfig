@@ -6,7 +6,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN \
     apt-get update && \
     apt-get install -q -y cargo jq cmake lldb python3 python3-pip \
-    curl wget git ripgrep unzip python3.8-venv tar gzip
+    curl wget git ripgrep unzip python3.8-venv tar gzip clangd
 
 RUN pip install debugpy
 
