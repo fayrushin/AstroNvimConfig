@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-ENV PATH="$HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:/usr/local/go/bin:/usr/lib/cuda/bin:/usr/local/bin:$PATH"
+ENV PATH="/root/.cargo/bin:/root/go/bin:/root/.local/bin:/root/bin:/usr/local/go/bin:/usr/local/bin:$PATH"
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN \
