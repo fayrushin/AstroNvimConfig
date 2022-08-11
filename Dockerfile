@@ -12,8 +12,8 @@ ENV TZ=Russia/Moscow
 RUN \
     apt-get update && \
     apt-get -qq -y upgrade && \
-    apt-get install -q -y locales cargo jq cmake lldb python3 python3-pip \
-    curl wget git ripgrep unzip python3.8-venv tar gzip clangd tmux zsh tzdata
+    apt-get install -q -y locales cargo jq lldb python3 python3-pip \
+    curl wget git ripgrep unzip python3.8-venv tar gzip clangd tmux zsh tzdata apt-utils
 
 # Set the locale
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
@@ -63,6 +63,7 @@ RUN \
 
 # copy dotfiles
 COPY --chown=user:user dotfiles .
+COPY --chown=user:user dotfiles/.config .config
 
 ARG GIT_USER_NAME
 ARG GIT_USER_EMAIL

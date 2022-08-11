@@ -147,6 +147,7 @@ local config = {
               python = "python3 -u",
               typescript = "deno run",
               rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
+              sh = "/bin/bash",
             },
           }
         end,
@@ -358,6 +359,7 @@ local config = {
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.jq,
         null_ls.builtins.formatting.prettier,
+        null_ls.builtins.formatting.shellharden,
         -- Set a linter
         -- null_ls.builtins.diagnostics.flake8,
       }
