@@ -349,7 +349,7 @@ local config = {
       ensure_installed = { "marksman", "sumneko_lua", "pyright", "cmake", "jsonls" },
     },
     ["mason-tool-installer"] = {
-      ensure_installed = { "stylua", "black", "jq", "prettier" },
+      ensure_installed = { "stylua", "black", "jq", "prettier", "shellharden" },
     },
     ["null-ls"] = function(config)
       local null_ls = require "null-ls"
