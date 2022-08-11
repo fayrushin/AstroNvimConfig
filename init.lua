@@ -199,7 +199,7 @@ local config = {
             },
             lldb = {
               type = "executable",
-              command = "/usr/lib/llvm-14/bin/lldb-vscode", -- adjust as needed, must be absolute path
+              command = "/usr/lib/llvm-10/bin/lldb-vscode", -- adjust as needed, must be absolute path
               name = "lldb",
             },
           }
