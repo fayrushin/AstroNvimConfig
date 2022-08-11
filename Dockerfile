@@ -4,8 +4,6 @@ FROM ${BASE_IMAGE}:${IMAGE_VERSION}
 
 ARG USER_ID
 ARG GROUP_ID
-ARG GIT_USER_NAME
-ARG GIT_USER_EMAIL
 
 ENV TERM xterm-256color
 ENV DEBIAN_FRONTEND=noninteractive
@@ -45,10 +43,14 @@ ENV PATH="$HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:/usr/local/go
 
 RUN pip install debugpy
 
+# install Oh-My-ZSH
+RUN wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | zsh || true
+
+# install nvm + npm
 ENV PROFILE "$HOME/.zshrc"
 ENV NVM_DIR "$HOME/.nvm"
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-RUN /bin/bash -c "source $NVM_DIR/nvm.sh && nvm install node"
+RUN /usr/bin/zsh -c "source $NVM_DIR/nvm.sh && nvm install node"
 
 RUN go install github.com/jesseduffield/lazygit@latest
 
@@ -58,12 +60,12 @@ RUN \
     git clone https://github.com/fayrushin/AstroNvimConfig ~/.config/nvim/lua/user
 # nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
     
-# install Oh-My-ZSH
-RUN wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | zsh || true
 
 # copy dotfiles
 COPY --chown=user:user dotfiles .
 
+ARG GIT_USER_NAME
+ARG GIT_USER_EMAIL
 # set git config options for user
 RUN if [ ! -z "$GIT_USER_NAME" ] && [ ! -z "$GIT_USER_EMAIL" ]; then \
     git config --global user.name "$GIT_USER_NAME"; \
