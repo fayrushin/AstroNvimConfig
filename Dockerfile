@@ -1,29 +1,71 @@
 FROM ubuntu:20.04
 
-ENV PATH="/root/.cargo/bin:/root/go/bin:/root/.local/bin:/root/bin:/usr/local/go/bin:/usr/local/bin:$PATH"
+ARG USER_ID
+ARG GROUP_ID
+ARG GIT_USER_NAME
+ARG GIT_USER_EMAIL
+
+ENV TERM xterm-256color
 ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Russia/Moscow
 
 RUN \
     apt-get update && \
-    apt-get install -q -y cargo jq cmake lldb python3 python3-pip \
-    curl wget git ripgrep unzip python3.8-venv tar gzip clangd
+    apt-get -qq -y upgrade && \
+    apt-get install -q -y locales cargo jq cmake lldb python3 python3-pip \
+    curl wget git ripgrep unzip python3.8-venv tar gzip clangd tmux zsh tzdata
 
-RUN pip install debugpy
-
-ENV NVM_DIR /usr/local/nvm
-RUN mkdir -p /usr/local/nvm
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
-RUN /bin/bash -c "source $NVM_DIR/nvm.sh && nvm install node"
+# Set the locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 RUN wget -q https://go.dev/dl/go1.19.linux-amd64.tar.gz && \
     tar -C /usr/local/ -xzf go1.19.linux-amd64.tar.gz
-RUN go install github.com/jesseduffield/lazygit@latest
-
 RUN \
     wget -q https://github.com/neovim/neovim/releases/download/v0.7.2/nvim-linux64.deb && \
     apt-get install -q -y ./nvim-linux64.deb
+
+# set up user and environment
+RUN addgroup --gid $GROUP_ID user && \
+  adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user
+
+RUN chsh -s /usr/bin/zsh user
+
+USER user
+
+ENV HOME /home/user
+
+WORKDIR "$HOME"
+
+ENV PATH="$HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/bin:/usr/local/go/bin:/usr/local/bin:$PATH"
+
+RUN pip install debugpy
+
+ENV PROFILE "$HOME/.zshrc"
+ENV NVM_DIR "$HOME/.nvm"
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+RUN /bin/bash -c "source $NVM_DIR/nvm.sh && nvm install node"
+
+RUN go install github.com/jesseduffield/lazygit@latest
+
 
 RUN \
     git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim && \
     git clone https://github.com/fayrushin/AstroNvimConfig ~/.config/nvim/lua/user
 # nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+    
+# install Oh-My-ZSH
+RUN wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O - | zsh || true
+
+# copy dotfiles
+COPY --chown=user:user dotfiles .
+
+# set git config options for user
+RUN if [ ! -z "$GIT_USER_NAME" ] && [ ! -z "$GIT_USER_EMAIL" ]; then \
+    git config --global user.name "$GIT_USER_NAME"; \
+    git config --global user.email "$GIT_USER_EMAIL"; \
+  fi
+
+ENTRYPOINT zsh
