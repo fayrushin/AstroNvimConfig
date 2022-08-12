@@ -16,7 +16,7 @@ RUN \
 RUN \
     apt-get install -q -y locales cargo jq lldb python3 python3-pip \
     curl wget git ripgrep unzip python3.8-venv tar gzip clangd tmux \
-    sudo htop zsh tzdata apt-utils xclip
+    sudo htop zsh tzdata apt-utils xclip ssh
 
 # Set the locale
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
@@ -77,4 +77,5 @@ RUN if [ ! -z "$GIT_USER_NAME" ] && [ ! -z "$GIT_USER_EMAIL" ]; then \
     git config --global user.email "$GIT_USER_EMAIL"; \
   fi
 
-ENTRYPOINT zsh
+# ENTRYPOINT zsh
+CMD tmux
