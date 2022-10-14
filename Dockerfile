@@ -27,7 +27,7 @@ ENV LC_ALL en_US.UTF-8
 RUN wget -q https://go.dev/dl/go1.19.linux-amd64.tar.gz && \
     tar -C /usr/local/ -xzf go1.19.linux-amd64.tar.gz
 RUN \
-    wget -q https://github.com/neovim/neovim/releases/download/v0.7.2/nvim-linux64.deb && \
+    wget -q https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-linux64.deb && \
     apt-get install -q -y ./nvim-linux64.deb
 
 # set up user and environment

@@ -1,42 +1,35 @@
+--              AstroNvim Configuration Table
+-- All configuration changes should go inside of the table below
+
+-- You can think of a Lua "table" as a dictionary like data structure the
+-- normal format is "key = value". These also handle array like data structures
+-- where a value with no key simply has an implicit numeric key
 local config = {
 
-  -- Configure AstroNvim updates
-  updater = {
-    remote = "origin", -- remote to use
-    channel = "nightly", -- "stable" or "nightly"
-    version = "latest", -- "latest", tag name, or regex search like "v1.*" to only do updates before v2 (STABLE ONLY)
-    branch = "main", -- branch name (NIGHTLY ONLY)
-    commit = nil, -- commit hash (NIGHTLY ONLY)
-    pin_plugins = true, -- nil, true, false (nil will pin plugins on stable only)
-    skip_prompts = false, -- skip prompts about breaking changes
-    show_changelog = true, -- show the changelog after performing an update
-    -- remotes = { -- easily add new remotes to track
-    --   ["remote_name"] = "https://remote_url.come/repo.git", -- full remote url
-    --   ["remote2"] = "github_user/repo", -- GitHub user/repo shortcut,
-    --   ["remote3"] = "github_user", -- GitHub user assume AstroNvim fork
-    -- },
-  },
-
-  -- Set colorscheme
-  colorscheme = "vscode",
+  -- Set colorscheme to use
+  colorscheme = "default_theme",
 
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
     opt = {
+      -- set to true or false etc.
       clipboard = "",
-      relativenumber = false, -- sets vim.opt.relativenumber
+      relativenumber = true, -- sets vim.opt.relativenumber
     },
     g = {
       mapleader = " ", -- sets vim.g.mapleader
-      vscode_style = "dark",
+      vscode_style = "light",
       vscode_italic_comment = 1,
+      -- autopairs_enabled = true, -- enable autopairs at start
+      -- diagnostics_enabled = true, -- enable diagnostics at start
+      -- status_diagnostics_enabled = true, -- enable diagnostics in statusline
     },
   },
 
   -- Modify which-key registration
   ["which-key"] = {
     -- Add bindings
-    register_mappings = {
+    register = {
       -- first key is the mode, n == normal mode
       n = {
         -- second key is the prefix, <leader> prefixes
@@ -45,7 +38,10 @@ local config = {
           -- ["N"] = { "<cmd>tabnew<cr>", "New Buffer" },
           ["d"] = {
             name = "Debug",
-            ["t"] = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+            ["t"] = {
+              "<cmd>lua require'dap'.toggle_breakpoint()<cr>",
+              "Toggle Breakpoint",
+            },
             ["b"] = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
             ["c"] = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
             ["C"] = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run To Cursor" },
@@ -109,34 +105,39 @@ local config = {
   lsp = {
     servers = {
       "clangd",
-      -- "pyright",
+      -- "pyright"
     },
-    -- ["server-settings"] = {
-    --   pyright = {
-    --     {
-    --       analysis = {
-    --         autoSearchPaths = true,
-    --         diagnosticMode = "openFilesOnly",
-    --         useLibraryCodeForTypes = true,
-    --         typeCheckingMode = "basic",
-    --       },
-    --     },
-    --   },
-    -- },
+    formatting = {
+      format_on_save = false, -- enable or disable auto formatting on save
+      disabled = { -- disable formatting capabilities for the listed clients
+        -- "sumneko_lua",
+      },
+      -- filter = function(client) -- fully override the default formatting function
+      --   return true
+      -- end
+    },
   },
 
+  icons = {
+    VimIcon = "",
+  },
+  heirline = {
+    -- define the separators between each section
+    separators = {
+      left = { "", " " }, -- separator for the left side of the statusline
+      right = { " ", "" }, -- separator for the right side of the statusline
+    },
+    -- add new colors that can be used by heirline
+    colors = {
+      blank_bg = "#5c6370",
+      file_info_bg = "#3e4452",
+      nav_icon_bg = "#89b06d",
+      folder_icon_bg = "#ec5f67",
+    },
+  },
   -- Configure plugins
   plugins = {
-    -- Add plugins, the packer syntax without the "use"
     init = {
-      -- {
-      --   "tanvirtin/vgit.nvim",
-      --   requires = {
-      --     "nvim-lua/plenary.nvim",
-      --   },
-      --   config = function() require("vgit").setup() end,
-      -- },
-      -- { "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
       {
         "CRAG666/code_runner.nvim",
         requires = "nvim-lua/plenary.nvim",
@@ -342,66 +343,217 @@ local config = {
         end,
       },
     },
-    treesitter = {
-      ensure_installed = { "lua", "cpp", "python", "cmake", "rust", "bash", "c", "json" },
-    },
-    ["mason-lspconfig"] = {
-      ensure_installed = { "marksman", "sumneko_lua", "pyright", "cmake", "jsonls" },
-    },
-    ["mason-tool-installer"] = {
-      ensure_installed = { "stylua", "black", "jq", "prettier", "shellharden" },
-    },
-    ["null-ls"] = function(config)
+
+    heirline = function(config)
+      -- the first element of the configuration table is the statusline
+      config[1] = {
+        -- default highlight for the entire statusline
+        hl = { fg = "fg", bg = "bg" },
+        -- each element following is a component in astronvim.status module
+
+        -- add the vim mode component
+        astronvim.status.component.mode {
+          -- enable mode text with padding as well as an icon before it
+          mode_text = {
+            icon = {
+              kind = "VimIcon",
+              padding = { right = 1, left = 1 },
+            },
+          },
+          -- define the highlight color for the text
+          hl = { fg = "bg" },
+          -- surround the component with a separators
+          surround = {
+            -- it's a left element, so use the left separator
+            separator = "left",
+            -- set the color of the surrounding based on the current mode using astronvim.status module
+            color = function()
+              return {
+                main = astronvim.status.hl.mode_bg(),
+                right = "blank_bg",
+              }
+            end,
+          },
+        },
+        -- we want an empty space here so we can use the component builder to make a new section with just an empty string
+        astronvim.status.component.builder {
+          { provider = "" },
+          -- define the surrounding separator and colors to be used inside of the component
+          -- and the color to the right of the separated out section
+          surround = {
+            separator = "left",
+            color = { main = "blank_bg", right = "file_info_bg" },
+          },
+        },
+        -- add a section for the currently opened file information
+        astronvim.status.component.file_info {
+          -- enable the file_icon and disable the highlighting based on filetype
+          file_icon = { highlight = false, padding = { left = 0 } },
+          -- add padding
+          padding = { right = 1 },
+          -- define the section separator
+          surround = { separator = "left", condition = false },
+        },
+        -- add a component for the current git branch if it exists and use no separator for the sections
+        astronvim.status.component.git_branch { surround = { separator = "none" } },
+        -- add a component for the current git diff if it exists and use no separator for the sections
+        astronvim.status.component.git_diff {
+          padding = { left = 1 },
+          surround = { separator = "none" },
+        },
+        -- fill the rest of the statusline
+        -- the elements after this will appear in the middle of the statusline
+        astronvim.status.component.fill(),
+        -- add a component to display if the LSP is loading, disable showing running client names, and use no separator
+        astronvim.status.component.lsp {
+          lsp_client_names = false,
+          surround = { separator = "none", color = "bg" },
+        },
+        -- fill the rest of the statusline
+        -- the elements after this will appear on the right of the statusline
+        astronvim.status.component.fill(),
+        -- add a component for the current diagnostics if it exists and use the right separator for the section
+        astronvim.status.component.diagnostics { surround = { separator = "right" } },
+        -- add a component to display LSP clients, disable showing LSP progress, and use the right separator
+        astronvim.status.component.lsp {
+          lsp_progress = false,
+          surround = { separator = "right" },
+        },
+        -- NvChad has some nice icons to go along with information, so we can create a parent component to do this
+        -- all of the children of this table will be treated together as a single component
+        {
+          -- define a simple component where the provider is just a folder icon
+          astronvim.status.component.builder {
+            -- astronvim.get_icon gets the user interface icon for a closed folder with a space after it
+            { provider = astronvim.get_icon "FolderClosed" },
+            -- add padding after icon
+            padding = { right = 1 },
+            -- set the foreground color to be used for the icon
+            hl = { fg = "bg" },
+            -- use the right separator and define the background color
+            surround = { separator = "right", color = "folder_icon_bg" },
+          },
+          -- add a file information component and only show the current working directory name
+          astronvim.status.component.file_info {
+            -- we only want filename to be used and we can change the fname
+            -- function to get the current working directory name
+            filename = {
+              fname = function() return vim.fn.getcwd() end,
+              padding = { left = 1 },
+            },
+            -- disable all other elements of the file_info component
+            file_icon = false,
+            file_modified = false,
+            file_read_only = false,
+            -- use no separator for this part but define a background color
+            surround = { separator = "none", color = "file_info_bg" },
+          },
+        },
+        -- the final component of the NvChad statusline is the navigation section
+        -- this is very similar to the previous current working directory section with the icon
+        { -- make nav section with icon border
+          -- define a custom component with just a file icon
+          astronvim.status.component.builder {
+            { provider = astronvim.get_icon "DefaultFile" },
+            -- add padding after icon
+            padding = { right = 1 },
+            -- set the icon foreground
+            hl = { fg = "bg" },
+            -- use the right separator and define the background color
+            -- as well as the color to the left of the separator
+            surround = {
+              separator = "right",
+              color = { main = "nav_icon_bg", left = "file_info_bg" },
+            },
+          },
+          -- add a navigation component and just display the percentage of progress in the file
+          astronvim.status.component.nav {
+            -- add some padding for the percentage provider
+            percentage = { padding = { left = 1, right = 1 } },
+            -- disable all other providers
+            ruler = false,
+            scrollbar = false,
+            -- define the foreground color
+            hl = { fg = "nav_icon_bg" },
+            -- use no separator and define the background color
+            surround = { separator = "none", color = "file_info_bg" },
+          },
+        },
+      }
+
+      -- a second element in the heirline setup would override the winbar
+      -- by only providing a single element we will only override the statusline
+      -- and use the default winbar in AstroNvim
+
+      -- return the final confiuration table
+      return config
+    end,
+    -- All other entries override the require("<key>").setup({...}) call for default plugins
+    ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
       local null_ls = require "null-ls"
       config.sources = {
-        -- Set a formatter
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.formatting.jq,
         null_ls.builtins.formatting.prettier,
         null_ls.builtins.formatting.shellharden,
-        -- Set a linter
-        -- null_ls.builtins.diagnostics.flake8,
       }
-      -- set up null-ls's on_attach function
-      config.on_attach = function(client)
-        -- NOTE: You can remove this on attach function to disable format on save
-        if client.resolved_capabilities.document_formatting then
-          vim.api.nvim_create_autocmd("BufWritePre", {
-            desc = "Auto format before save",
-            pattern = "<buffer>",
-            callback = vim.lsp.buf.formatting_sync,
-          })
-        end
-      end
       return config -- return final config table
     end,
+    treesitter = { -- overrides `require("treesitter").setup(...)`
+      ensure_installed = { "lua", "cpp", "python", "cmake", "rust", "bash", "c", "json" },
+    },
+    ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
+      ensure_installed = { "marksman", "sumneko_lua", "pyright", "cmake", "jsonls" },
+      -- Mapping data with "desc" stored directly by vim.keymap.set().
+      --
+      -- Please use this mappings table to set keyboard mapping since this is the
+      -- lower level configuration and more robust one. (which-key will
+      -- automatically pick-up stored data by this setting.)
+    },
+    -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
+    ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
+      ensure_installed = { "stylua", "black", "jq", "prettier", "shellharden" },
+    },
   },
 
-  -- Diagnostics configuration (for vim.diagnostics.config({}))
+  -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
-    virtual_text = false,
+    virtual_text = true,
     underline = true,
   },
 
   mappings = {
     -- first key is the mode
     n = {
-      -- setting a mapping to false will disable it
+      -- second key is the lefthand side of the map
+      -- mappings seen under group name "Buffer"
+      -- ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
+      -- ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
+      -- ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
+      -- ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
+      -- quick save
+      -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
       ["<leader>d"] = false,
+    },
+    t = {
+      -- setting a mapping to false will disable it
+      -- ["<esc>"] = false,
     },
   },
 
-  polish = function()
-    local map = vim.keymap.set
-    local unmap = vim.keymap.del
-
-    unmap("t", "<esc>")
-    unmap("t", "jk")
-
-    map("t", "<c-q>", "<c-\\><c-n>", { desc = "Terminal normal mode" })
-    -- map("t", "<esc><esc>", "<c-\\><c-n>:q<cr>", { desc = "Terminal quit" })
-  end,
+  -- This function is run last and is a good place to configuring
+  -- augroups/autocommands and custom filetypes also this just pure lua so
+  -- anything that doesn't fit in the normal config locations above can go here
+  -- polish = function()
+  --   local map = vim.keymap.set
+  --   local unmap = vim.keymap.del
+  --
+  --   unmap("t", "<esc>")
+  --   unmap("t", "jk")
+  --
+  --   map("t", "<c-q>", "<c-\\><c-n>", { desc = "Terminal normal mode" })
+  -- end,
 }
 
 return config
