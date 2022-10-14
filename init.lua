@@ -18,8 +18,8 @@ local config = {
     },
     g = {
       mapleader = " ", -- sets vim.g.mapleader
-      vscode_style = "light",
-      vscode_italic_comment = 1,
+      -- vscode_style = "light",
+      -- vscode_italic_comment = 1,
       -- autopairs_enabled = true, -- enable autopairs at start
       -- diagnostics_enabled = true, -- enable diagnostics at start
       -- status_diagnostics_enabled = true, -- enable diagnostics in statusline
@@ -206,9 +206,9 @@ local config = {
         after = "telescope.nvim",
         config = function() require("telescope").load_extension "ui-select" end,
       },
-      {
-        "fayrushin/vscode.nvim",
-      },
+      -- {
+      --   "fayrushin/vscode.nvim",
+      -- },
       {
         "mfussenegger/nvim-dap",
         config = function()
