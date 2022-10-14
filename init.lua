@@ -7,7 +7,7 @@
 local config = {
 
   -- Set colorscheme to use
-  colorscheme = "default_theme",
+  colorscheme = "dayfox",
 
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
@@ -139,6 +139,38 @@ local config = {
   plugins = {
     init = {
       {
+        "EdenEast/nightfox.nvim",
+        config = function()
+          require("nightfox").setup {
+            -- disable extra plugins that AstroNvim doesn't use (this is optional)
+            modules = {
+              barbar = false,
+              dashboard = false,
+              fern = false,
+              fidget = false,
+              gitgutter = false,
+              glyph_palette = false,
+              illuminate = false,
+              lightspeed = false,
+              lsp_saga = false,
+              lsp_trouble = false,
+              modes = false,
+              neogit = false,
+              nvimtree = false,
+              pounce = false,
+              sneak = false,
+              symbols_outline = false,
+            },
+            groups = {
+              all = {
+                -- add highlight group for AstroNvim's built in URL highlighting
+                HighlightURL = { style = "underline" },
+              },
+            },
+          }
+        end,
+      },
+      {
         "CRAG666/code_runner.nvim",
         requires = "nvim-lua/plenary.nvim",
         config = function()
@@ -176,11 +208,6 @@ local config = {
       },
       {
         "fayrushin/vscode.nvim",
-      },
-      {
-        "catppuccin/nvim",
-        as = "catppuccin",
-        config = function() require("catppuccin").setup {} end,
       },
       {
         "mfussenegger/nvim-dap",
@@ -519,7 +546,7 @@ local config = {
 
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
-    virtual_text = true,
+    virtual_text = false,
     underline = true,
   },
 
