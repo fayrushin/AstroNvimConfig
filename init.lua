@@ -186,6 +186,28 @@ local config = {
         end,
       },
       {
+        "sindrets/diffview.nvim",
+        requires = "nvim-lua/plenary.nvim",
+        config = function()
+          require("diffview").setup {
+            keymaps = {
+              view = {
+                ["<leader>e"] = false,
+                ["<leader>b"] = false,
+              },
+              file_panel = {
+                ["<leader>e"] = false,
+                ["<leader>b"] = false,
+              },
+              file_history_panel = {
+                ["<leader>e"] = false,
+                ["<leader>b"] = false,
+              },
+            },
+          }
+        end,
+      },
+      {
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
       },
@@ -261,18 +283,18 @@ local config = {
             },
           }
           -- get notify
-          local function start_session(_, _)
-            local info_string = string.format("%s", dap.session().config.program)
-            vim.notify(info_string, "debug", { title = "Debugger Started", timeout = 500 })
-          end
+          -- local function start_session(_, _)
+          --   local info_string = string.format("%s", dap.session().config.program)
+          --   vim.notify(info_string, "debug", { title = "Debugger Started", timeout = 500 })
+          -- end
 
-          local function terminate_session(_, _)
-            local info_string = string.format("%s", dap.session().config.program)
-            vim.notify(info_string, "debug", { title = "Debugger Terminated", timeout = 500 })
-          end
+          -- local function terminate_session(_, _)
+          --   local info_string = string.format("%s", dap.session().config.program)
+          --   vim.notify(info_string, "debug", { title = "Debugger Terminated", timeout = 500 })
+          -- end
 
-          dap.listeners.after.event_initialized["dapui"] = start_session
-          dap.listeners.before.event_terminated["dapui"] = terminate_session
+          -- dap.listeners.after.event_initialized["dapui"] = start_session
+          -- dap.listeners.before.event_terminated["dapui"] = terminate_session
           -- Define symbols
           vim.fn.sign_define("DapStopped", { text = "", texthl = "DiagnosticWarn" })
           vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticInfo" })
@@ -562,6 +584,16 @@ local config = {
       -- quick save
       -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
       ["<leader>d"] = false,
+      ["<leader>gd"] = { "<cmd>DiffviewOpen<cr>", desc = "View git diff" },
+      ["<leader>gq"] = { "<cmd>DiffviewClose<cr>", desc = "Close git diff" },
+      ["<leader>gh"] = { "<cmd>DiffviewFileHistory<cr>", desc = "View file history" },
+      ["<leader>gf"] = { "<cmd>DiffviewToggleFiles<cr>", desc = "Toggle files bar" },
+      ["<A-k>"] = { "<cmd>m .-2<CR>", desc = "move line up" },
+      ["<A-j>"] = { "<cmd>m .+1<CR>", desc = "move line down" },
+    },
+    v = {
+      ["<A-j>"] = { ":m '>+1<cr>gv=gv" },
+      ["<A-k>"] = { ":m '<-2<cr>gv=gv" },
     },
     t = {
       -- setting a mapping to false will disable it
@@ -572,15 +604,12 @@ local config = {
   -- This function is run last and is a good place to configuring
   -- augroups/autocommands and custom filetypes also this just pure lua so
   -- anything that doesn't fit in the normal config locations above can go here
-  -- polish = function()
-  --   local map = vim.keymap.set
-  --   local unmap = vim.keymap.del
-  --
-  --   unmap("t", "<esc>")
-  --   unmap("t", "jk")
-  --
-  --   map("t", "<c-q>", "<c-\\><c-n>", { desc = "Terminal normal mode" })
-  -- end,
+  polish = function()
+    local opts = { expr = true, noremap = true }
+    local map = vim.keymap.set
+    map("c", "<c-j>", 'pumvisible() ? "\\<C-n>" : "\\<C-j>"', opts)
+    map("c", "<c-k>", 'pumvisible() ? "\\<C-p>" : "\\<C-k>"', opts)
+  end,
 }
 
 return config
