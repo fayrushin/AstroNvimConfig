@@ -588,6 +588,8 @@ local config = {
       ["<leader>gq"] = { "<cmd>DiffviewClose<cr>", desc = "Close git diff" },
       ["<leader>gh"] = { "<cmd>DiffviewFileHistory<cr>", desc = "View file history" },
       ["<leader>gf"] = { "<cmd>DiffviewToggleFiles<cr>", desc = "Toggle files bar" },
+      ["<leader>gr"] = { "<cmd>Gitsigns reset_hunk<cr>", desc = "Reset git hunk"},
+      ["<leader>gR"] = { "<cmd>Gitsigns reset_buffer<cr>", desc = "Reset git buffer"},
       ["<A-k>"] = { "<cmd>m .-2<CR>", desc = "move line up" },
       ["<A-j>"] = { "<cmd>m .+1<CR>", desc = "move line down" },
     },
