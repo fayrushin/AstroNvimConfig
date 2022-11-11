@@ -187,25 +187,25 @@ local config = {
       },
       {
         "sindrets/diffview.nvim",
-        requires = "nvim-lua/plenary.nvim",
-        config = function()
-          require("diffview").setup {
-            keymaps = {
-              view = {
-                ["<leader>e"] = false,
-                ["<leader>b"] = false,
-              },
-              file_panel = {
-                ["<leader>e"] = false,
-                ["<leader>b"] = false,
-              },
-              file_history_panel = {
-                ["<leader>e"] = false,
-                ["<leader>b"] = false,
-              },
-            },
-          }
-        end,
+        -- requires = "nvim-lua/plenary.nvim",
+        -- config = function()
+        --   require("diffview").setup {
+        --     keymaps = {
+        --       view = {
+        --         ["<leader>e"] = false,
+        --         ["<leader>b"] = false,
+        --       },
+        --       file_panel = {
+        --         ["<leader>e"] = false,
+        --         ["<leader>b"] = false,
+        --       },
+        --       file_history_panel = {
+        --         ["<leader>e"] = false,
+        --         ["<leader>b"] = false,
+        --       },
+        --     },
+        --   }
+        -- end,
       },
       {
         "iamcco/markdown-preview.nvim",
