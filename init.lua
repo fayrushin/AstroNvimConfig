@@ -7,7 +7,7 @@
 local config = {
 
   -- Set colorscheme to use
-  colorscheme = "nightfox",
+  colorscheme = "dayfox",
 
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
@@ -143,30 +143,30 @@ local config = {
         config = function()
           require("nightfox").setup {
             -- disable extra plugins that AstroNvim doesn't use (this is optional)
-            modules = {
-              barbar = false,
-              dashboard = false,
-              fern = false,
-              fidget = false,
-              gitgutter = false,
-              glyph_palette = false,
-              illuminate = false,
-              lightspeed = false,
-              lsp_saga = false,
-              lsp_trouble = false,
-              modes = false,
-              neogit = false,
-              nvimtree = false,
-              pounce = false,
-              sneak = false,
-              symbols_outline = false,
-            },
-            groups = {
-              all = {
-                -- add highlight group for AstroNvim's built in URL highlighting
-                HighlightURL = { style = "underline" },
-              },
-            },
+            -- modules = {
+            -- barbar = false,
+            -- dashboard = false,
+            -- fern = false,
+            -- fidget = false,
+            -- gitgutter = false,
+            -- glyph_palette = false,
+            -- illuminate = false,
+            -- lightspeed = false,
+            -- lsp_saga = false,
+            -- lsp_trouble = false,
+            -- modes = false,
+            -- neogit = false,
+            -- nvimtree = false,
+            -- pounce = false,
+            -- sneak = false,
+            -- symbols_outline = false,
+            -- },
+            -- groups = {
+            --   all = {
+            --     -- add highlight group for AstroNvim's built in URL highlighting
+            --     HighlightURL = { style = "underline" },
+            --   },
+            -- },
           }
         end,
       },
@@ -588,8 +588,8 @@ local config = {
       ["<leader>gq"] = { "<cmd>DiffviewClose<cr>", desc = "Close git diff" },
       ["<leader>gh"] = { "<cmd>DiffviewFileHistory<cr>", desc = "View file history" },
       ["<leader>gf"] = { "<cmd>DiffviewToggleFiles<cr>", desc = "Toggle files bar" },
-      ["<leader>gr"] = { "<cmd>Gitsigns reset_hunk<cr>", desc = "Reset git hunk"},
-      ["<leader>gR"] = { "<cmd>Gitsigns reset_buffer<cr>", desc = "Reset git buffer"},
+      ["<leader>gr"] = { "<cmd>Gitsigns reset_hunk<cr>", desc = "Reset git hunk" },
+      ["<leader>gR"] = { "<cmd>Gitsigns reset_buffer<cr>", desc = "Reset git buffer" },
       ["<A-k>"] = { "<cmd>m .-2<CR>", desc = "move line up" },
       ["<A-j>"] = { "<cmd>m .+1<CR>", desc = "move line down" },
     },
