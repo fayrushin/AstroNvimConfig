@@ -104,7 +104,7 @@ local config = {
   },
   lsp = {
     servers = {
-      "clangd",
+      -- "clangd",
       -- "pyright"
     },
     formatting = {
@@ -553,7 +553,7 @@ local config = {
       ensure_installed = { "lua", "cpp", "python", "cmake", "rust", "bash", "c", "json" },
     },
     ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
-      ensure_installed = { "marksman", "sumneko_lua", "pyright", "cmake", "jsonls" },
+      ensure_installed = { "clangd", "marksman", "sumneko_lua", "pyright", "cmake", "jsonls" },
       -- Mapping data with "desc" stored directly by vim.keymap.set().
       --
       -- Please use this mappings table to set keyboard mapping since this is the
