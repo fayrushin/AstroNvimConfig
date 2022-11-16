@@ -7,7 +7,7 @@
 local config = {
 
   -- Set colorscheme to use
-  colorscheme = "dayfox",
+  colorscheme = "nightfox",
 
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
@@ -569,7 +569,7 @@ local config = {
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
     virtual_text = false,
-    underline = true,
+    underline = false,
   },
 
   mappings = {
@@ -592,6 +592,7 @@ local config = {
       ["<leader>gR"] = { "<cmd>Gitsigns reset_buffer<cr>", desc = "Reset git buffer" },
       ["<A-k>"] = { "<cmd>m .-2<CR>", desc = "move line up" },
       ["<A-j>"] = { "<cmd>m .+1<CR>", desc = "move line down" },
+      ["<leader>lt"] = { "<cmd>ClangdSwitchSourceHeader<cr>", desc = "Toggle source/header" },
     },
     v = {
       ["<A-j>"] = { ":m '>+1<cr>gv=gv" },
