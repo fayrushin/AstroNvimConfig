@@ -53,7 +53,7 @@ local config = {
             ["p"] = { "<cmd>lua require'dap'.pause()<cr>", "Pause" },
             ["r"] = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
             ["s"] = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
-            ["q"] = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
+            ["q"] = { "<cmd>lua require'dap'.terminate()<cr>", "Terminate" },
             ["x"] = { "<cmd>lua require'dapui'.toggle()<CR>", "Toggle debug UI" },
           },
           ["r"] = { "<cmd>RunCode<cr>", "Run code" },
@@ -468,6 +468,7 @@ local config = {
           lsp_progress = false,
           surround = { separator = "right" },
         },
+        astronvim.status.component.cmd_info(),
         -- NvChad has some nice icons to go along with information, so we can create a parent component to do this
         -- all of the children of this table will be treated together as a single component
         {
