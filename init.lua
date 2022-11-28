@@ -7,14 +7,14 @@
 local config = {
 
   -- Set colorscheme to use
-  colorscheme = "nightfox",
+  colorscheme = "dayfox",
 
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
     opt = {
       -- set to true or false etc.
       clipboard = "",
-      relativenumber = true, -- sets vim.opt.relativenumber
+      relativenumber = false, -- sets vim.opt.relativenumber
     },
     g = {
       mapleader = " ", -- sets vim.g.mapleader
