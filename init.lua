@@ -7,7 +7,7 @@
 local config = {
 
   -- Set colorscheme to use
-  colorscheme = "dayfox",
+  colorscheme = "nightfox",
 
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
@@ -18,6 +18,7 @@ local config = {
     },
     g = {
       mapleader = " ", -- sets vim.g.mapleader
+      ui_notifications_enabled = false, -- disable notifications when toggling UI elements
       -- vscode_style = "light",
       -- vscode_italic_comment = 1,
       -- autopairs_enabled = true, -- enable autopairs at start
@@ -468,7 +469,7 @@ local config = {
           lsp_progress = false,
           surround = { separator = "right" },
         },
-        astronvim.status.component.cmd_info(),
+        astronvim.status.component.cmd_info { search_count = { maxcount = 999 } },
         -- NvChad has some nice icons to go along with information, so we can create a parent component to do this
         -- all of the children of this table will be treated together as a single component
         {
@@ -538,32 +539,27 @@ local config = {
       -- return the final confiuration table
       return config
     end,
-    -- All other entries override the require("<key>").setup({...}) call for default plugins
-    ["null-ls"] = function(config) -- overrides `require("null-ls").setup(config)`
-      local null_ls = require "null-ls"
-      config.sources = {
-        null_ls.builtins.formatting.black,
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.jq,
-        null_ls.builtins.formatting.prettier,
-        null_ls.builtins.formatting.shellharden,
-      }
-      return config -- return final config table
-    end,
     treesitter = { -- overrides `require("treesitter").setup(...)`
-      ensure_installed = { "lua", "cpp", "python", "cmake", "rust", "bash", "c", "json" },
+      ensure_installed = {
+        "lua",
+        "cpp",
+        "python",
+        "cmake",
+        "rust",
+        "bash",
+        "c",
+        "json",
+        "markdown",
+        "dockerfile",
+        "yaml",
+      },
     },
     ["mason-lspconfig"] = { -- overrides `require("mason-lspconfig").setup(...)`
-      ensure_installed = { "clangd", "marksman", "sumneko_lua", "pyright", "cmake", "jsonls" },
-      -- Mapping data with "desc" stored directly by vim.keymap.set().
-      --
-      -- Please use this mappings table to set keyboard mapping since this is the
-      -- lower level configuration and more robust one. (which-key will
-      -- automatically pick-up stored data by this setting.)
+      ensure_installed = { "clangd", "marksman", "sumneko_lua", "pyright", "cmake", "jsonls", "bashls" },
     },
     -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
     ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
-      ensure_installed = { "stylua", "black", "jq", "prettier", "shellharden" },
+      ensure_installed = { "stylua", "black", "prettier", "shfmt", "shellcheck" },
     },
   },
 

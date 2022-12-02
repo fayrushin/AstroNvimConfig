@@ -32,8 +32,8 @@ RUN \
 
 # set up user and environment
 RUN addgroup --gid $GROUP_ID user && \
-  adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user && \
-  echo "user:user" | chpasswd && adduser user sudo
+    adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user && \
+    echo "user:user" | chpasswd && adduser user sudo
 
 RUN chsh -s /usr/bin/zsh user
 
@@ -63,7 +63,7 @@ RUN \
     git clone https://github.com/AstroNvim/AstroNvim ~/.config/nvim && \
     git clone https://github.com/fayrushin/AstroNvimConfig ~/.config/nvim/lua/user
 # nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
-    
+
 
 # copy dotfiles
 COPY --chown=user:user dotfiles .
@@ -75,6 +75,6 @@ ARG GIT_USER_EMAIL
 RUN if [ ! -z "$GIT_USER_NAME" ] && [ ! -z "$GIT_USER_EMAIL" ]; then \
     git config --global user.name "$GIT_USER_NAME"; \
     git config --global user.email "$GIT_USER_EMAIL"; \
-  fi
+    fi
 
 CMD tmux
