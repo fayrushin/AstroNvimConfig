@@ -18,7 +18,7 @@ local config = {
     },
     g = {
       mapleader = " ", -- sets vim.g.mapleader
-      ui_notifications_enabled = false, -- disable notifications when toggling UI elements
+      -- ui_notifications_enabled = false, -- disable notifications when toggling UI elements
       -- vscode_style = "light",
       -- vscode_italic_comment = 1,
       -- autopairs_enabled = true, -- enable autopairs at start
@@ -37,26 +37,6 @@ local config = {
         ["<leader>"] = {
           -- which-key registration table for normal mode, leader prefix
           -- ["N"] = { "<cmd>tabnew<cr>", "New Buffer" },
-          ["d"] = {
-            name = "Debug",
-            ["t"] = {
-              "<cmd>lua require'dap'.toggle_breakpoint()<cr>",
-              "Toggle Breakpoint",
-            },
-            ["b"] = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
-            ["c"] = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
-            ["C"] = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run To Cursor" },
-            ["d"] = { "<cmd>lua require'dap'.disconnect()<cr>", "Disconnect" },
-            ["g"] = { "<cmd>lua require'dap'.session()<cr>", "Get Session" },
-            ["i"] = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
-            ["o"] = { "<cmd>lua require'dap'.step_over()<cr>", "Step Over" },
-            ["u"] = { "<cmd>lua require'dap'.step_out()<cr>", "Step Out" },
-            ["p"] = { "<cmd>lua require'dap'.pause()<cr>", "Pause" },
-            ["r"] = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
-            ["s"] = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
-            ["q"] = { "<cmd>lua require'dap'.terminate()<cr>", "Terminate" },
-            ["x"] = { "<cmd>lua require'dapui'.toggle()<CR>", "Toggle debug UI" },
-          },
           ["r"] = { "<cmd>RunCode<cr>", "Run code" },
           ["b"] = {
             name = "CMake",
@@ -111,7 +91,7 @@ local config = {
     formatting = {
       format_on_save = false, -- enable or disable auto formatting on save
       disabled = { -- disable formatting capabilities for the listed clients
-        -- "sumneko_lua",
+        "sumneko_lua",
       },
       -- filter = function(client) -- fully override the default formatting function
       --   return true
@@ -136,40 +116,20 @@ local config = {
       folder_icon_bg = "#ec5f67",
     },
   },
+  dap = {
+    adapters = {
+      lldb = {
+        type = "executable",
+        command = "/usr/lib/llvm-10/bin/lldb-vscode", -- adjust as needed, must be absolute path
+        name = "lldb",
+      },
+    },
+  },
   -- Configure plugins
   plugins = {
     init = {
       {
         "EdenEast/nightfox.nvim",
-        config = function()
-          require("nightfox").setup {
-            -- disable extra plugins that AstroNvim doesn't use (this is optional)
-            -- modules = {
-            -- barbar = false,
-            -- dashboard = false,
-            -- fern = false,
-            -- fidget = false,
-            -- gitgutter = false,
-            -- glyph_palette = false,
-            -- illuminate = false,
-            -- lightspeed = false,
-            -- lsp_saga = false,
-            -- lsp_trouble = false,
-            -- modes = false,
-            -- neogit = false,
-            -- nvimtree = false,
-            -- pounce = false,
-            -- sneak = false,
-            -- symbols_outline = false,
-            -- },
-            -- groups = {
-            --   all = {
-            --     -- add highlight group for AstroNvim's built in URL highlighting
-            --     HighlightURL = { style = "underline" },
-            --   },
-            -- },
-          }
-        end,
       },
       {
         "CRAG666/code_runner.nvim",
@@ -229,133 +189,6 @@ local config = {
         after = "telescope.nvim",
         config = function() require("telescope").load_extension "ui-select" end,
       },
-      -- {
-      --   "fayrushin/vscode.nvim",
-      -- },
-      {
-        "mfussenegger/nvim-dap",
-        config = function()
-          local dap = require "dap"
-          dap.adapters = {
-            python = {
-              type = "executable",
-              command = "/usr/bin/python3",
-              args = { "-m", "debugpy.adapter" },
-            },
-            cppdbg = {
-              id = "cppdbg",
-              type = "executable",
-              name = "cppdbg",
-              command = "OpenDebugAD7",
-            },
-            lldb = {
-              type = "executable",
-              command = "/usr/lib/llvm-10/bin/lldb-vscode", -- adjust as needed, must be absolute path
-              name = "lldb",
-            },
-          }
-          dap.configurations = {
-            python = {
-              {
-                type = "python",
-                request = "launch",
-                name = "Launch file",
-                program = "${file}",
-                pythonPath = function() return "/usr/bin/python3" end,
-              },
-            },
-            cpp = {
-              {
-                name = "Launch file",
-                type = "cppdbg",
-                request = "launch",
-                program = function() return vim.fn.input("Path to executable: ", vim.fn.expand "%:p" .. "/", "file") end,
-                cwd = "${workspaceFolder}",
-                stopOnEntry = true,
-                setupCommands = {
-                  {
-                    description = "Enable pretty-printing",
-                    text = "-enable-pretty-printing",
-                    ignoreFailures = false,
-                  },
-                },
-                runInTerminal = true,
-              },
-            },
-          }
-          -- get notify
-          -- local function start_session(_, _)
-          --   local info_string = string.format("%s", dap.session().config.program)
-          --   vim.notify(info_string, "debug", { title = "Debugger Started", timeout = 500 })
-          -- end
-
-          -- local function terminate_session(_, _)
-          --   local info_string = string.format("%s", dap.session().config.program)
-          --   vim.notify(info_string, "debug", { title = "Debugger Terminated", timeout = 500 })
-          -- end
-
-          -- dap.listeners.after.event_initialized["dapui"] = start_session
-          -- dap.listeners.before.event_terminated["dapui"] = terminate_session
-          -- Define symbols
-          vim.fn.sign_define("DapStopped", { text = "", texthl = "DiagnosticWarn" })
-          vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticInfo" })
-          vim.fn.sign_define("DapBreakpointRejected", { text = "", texthl = "DiagnosticError" })
-          vim.fn.sign_define("DapBreakpointCondition", { text = "", texthl = "DiagnosticInfo" })
-          vim.fn.sign_define("DapLogPoint", { text = ".>", texthl = "DiagnosticInfo" })
-        end,
-      },
-      {
-        "rcarriga/nvim-dap-ui",
-        after = "nvim-dap",
-        config = function()
-          -- require("dapui").setup()
-          local dap, dapui = require "dap", require "dapui"
-          dapui.setup {
-            icons = { expanded = "▾", collapsed = "▸" },
-            mappings = {
-              expand = "<cr>",
-              open = "o",
-              remove = "d",
-              edit = "e",
-              repl = "r",
-              toggle = "t",
-            },
-            layouts = {
-              {
-                elements = {
-                  { id = "watches", size = 0.5 },
-                  { id = "scopes", size = 0.5 },
-                  { id = "breakpoints", size = 0.25 },
-                  { id = "stacks", size = 0.25 },
-                },
-                size = 40,
-                position = "left",
-              },
-              {
-                elements = { "repl" },
-                size = 10,
-                position = "bottom",
-              },
-            },
-            floating = {
-              border = "single",
-              mappings = {
-                close = { "q", "<esc>" },
-              },
-            },
-            windows = { indent = 1 },
-          }
-          -- add listeners to auto open DAP UI
-          dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
-          -- dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
-          -- dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
-        end,
-      },
-      {
-        "theHamsta/nvim-dap-virtual-text",
-        after = "nvim-dap",
-        config = function() require("nvim-dap-virtual-text").setup() end,
-      },
       {
         "Shatur/neovim-cmake",
         after = "nvim-dap-ui",
@@ -372,23 +205,27 @@ local config = {
               height = 10, -- Height of the opened quickfix.
               only_on_error = false, -- Open quickfix window only if target build failed.
             },
-            dap_configuration = {
-              type = "lldb",
-              request = "launch",
-              -- setupCommands = {
-              --   {
-              --     description = "Enable pretty-printing",
-              --     text = "-enable-pretty-printing",
-              --     ignoreFailures = false
-              --   }
-              -- },
-              runInTerminal = false,
-              stopOnEntry = false,
-              -- args = { "-h" },
+            dap_configurations = {
+              lldb_vscode = {
+                type = "lldb",
+                request = "launch",
+                runInTerminal = false,
+              },
+              cppdbg_vscode = {
+                type = "cppdbg",
+                request = "launch",
+                setupCommands = {
+                  {
+                    description = "Enable pretty-printing",
+                    text = "-enable-pretty-printing",
+                    ignoreFailures = false,
+                  },
+                },
+                stopOnEntry = true,
+              },
             },
+            dap_configuration = "lldb_vscode",
             dap_open_command = false,
-            -- dap_open_command = require('dap').repl.open,
-            -- dap_open_command = require('dapui').open,
           }
         end,
       },
@@ -572,14 +409,6 @@ local config = {
   mappings = {
     -- first key is the mode
     n = {
-      -- second key is the lefthand side of the map
-      -- mappings seen under group name "Buffer"
-      -- ["<leader>bb"] = { "<cmd>tabnew<cr>", desc = "New tab" },
-      -- ["<leader>bc"] = { "<cmd>BufferLinePickClose<cr>", desc = "Pick to close" },
-      -- ["<leader>bj"] = { "<cmd>BufferLinePick<cr>", desc = "Pick to jump" },
-      -- ["<leader>bt"] = { "<cmd>BufferLineSortByTabs<cr>", desc = "Sort by tabs" },
-      -- quick save
-      -- ["<C-s>"] = { ":w!<cr>", desc = "Save File" },  -- change description but the same command
       ["<leader>d"] = false,
       ["<leader>gd"] = { "<cmd>DiffviewOpen<cr>", desc = "View git diff" },
       ["<leader>gq"] = { "<cmd>DiffviewClose<cr>", desc = "Close git diff" },
