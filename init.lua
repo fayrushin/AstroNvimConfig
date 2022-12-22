@@ -396,7 +396,7 @@ local config = {
     },
     -- use mason-null-ls to configure Formatters/Linter installation for null-ls sources
     ["mason-null-ls"] = { -- overrides `require("mason-null-ls").setup(...)`
-      ensure_installed = { "stylua", "black", "prettier", "shfmt", "shellcheck" },
+      ensure_installed = { "stylua", "black", "prettier", "shfmt", "shellcheck", "cmakelang" },
     },
   },
 
