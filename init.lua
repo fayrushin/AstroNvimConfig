@@ -12,18 +12,13 @@ local config = {
   -- set vim options here (vim.<first_key>.<second_key> =  value)
   options = {
     opt = {
-      -- set to true or false etc.
       clipboard = "",
       relativenumber = false, -- sets vim.opt.relativenumber
+      smartindent = true,
     },
     g = {
       mapleader = " ", -- sets vim.g.mapleader
-      -- ui_notifications_enabled = false, -- disable notifications when toggling UI elements
-      -- vscode_style = "light",
-      -- vscode_italic_comment = 1,
-      -- autopairs_enabled = true, -- enable autopairs at start
-      -- diagnostics_enabled = true, -- enable diagnostics at start
-      -- status_diagnostics_enabled = true, -- enable diagnostics in statusline
+      autopairs_enabled = false, -- enable autopairs at start
     },
   },
 
@@ -128,6 +123,13 @@ local config = {
   -- Configure plugins
   plugins = {
     init = {
+      ["Darazaki/indent-o-matic"] = {
+        disable = true,
+      },
+      {
+        "nmac427/guess-indent.nvim",
+        config = function() require("guess-indent").setup {} end,
+      },
       {
         "EdenEast/nightfox.nvim",
       },
