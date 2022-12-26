@@ -68,6 +68,7 @@ RUN \
 # copy dotfiles
 COPY --chown=user:user dotfiles .
 COPY --chown=user:user dotfiles/.config .config
+COPY --chown=user:user dotfiles/.bin .bin
 
 ARG GIT_USER_NAME
 ARG GIT_USER_EMAIL
