@@ -128,10 +128,10 @@ local config = {
       ["Darazaki/indent-o-matic"] = {
         disable = true,
       },
-      {
-        "nmac427/guess-indent.nvim",
-        config = function() require("guess-indent").setup {} end,
-      },
+      -- {
+      --   "nmac427/guess-indent.nvim",
+      --   config = function() require("guess-indent").setup {} end,
+      -- },
       {
         "EdenEast/nightfox.nvim",
       },
