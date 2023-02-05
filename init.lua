@@ -19,6 +19,8 @@ local config = {
     g = {
       mapleader = " ", -- sets vim.g.mapleader
       autopairs_enabled = false, -- enable autopairs at start
+      XkbSwitchEnabled = 1,
+      XkbSwitchLib = "/usr/local/lib/libg3kbswitch.so",
     },
   },
 
@@ -133,6 +135,9 @@ local config = {
       --   config = function() require("guess-indent").setup {} end,
       -- },
       {
+        "lyokha/vim-xkbswitch",
+      },
+      {
         "EdenEast/nightfox.nvim",
       },
       {
@@ -175,7 +180,7 @@ local config = {
       {
         "iamcco/markdown-preview.nvim",
         run = function() vim.fn["mkdp#util#install"]() end,
-        ft = { "markdown" }
+        ft = { "markdown" },
       },
       {
         "folke/trouble.nvim",
@@ -234,6 +239,10 @@ local config = {
           }
         end,
       },
+    },
+    better_escape = {
+      -- добавил сочетание клавиш для выхода из insert мода
+      mapping = { "jk", "ол" },
     },
 
     heirline = function(config)
