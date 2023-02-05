@@ -19,8 +19,8 @@ local config = {
     g = {
       mapleader = " ", -- sets vim.g.mapleader
       autopairs_enabled = false, -- enable autopairs at start
-      XkbSwitchEnabled = 1,
-      XkbSwitchLib = "/usr/local/lib/libg3kbswitch.so",
+      -- XkbSwitchEnabled = 1,
+      -- XkbSwitchLib = "/usr/local/lib/libg3kbswitch.so",
     },
   },
 
@@ -134,9 +134,9 @@ local config = {
       --   "nmac427/guess-indent.nvim",
       --   config = function() require("guess-indent").setup {} end,
       -- },
-      {
-        "lyokha/vim-xkbswitch",
-      },
+      -- {
+      --   "lyokha/vim-xkbswitch",
+      -- },
       {
         "EdenEast/nightfox.nvim",
       },
