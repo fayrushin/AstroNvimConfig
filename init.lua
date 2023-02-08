@@ -242,7 +242,7 @@ local config = {
     },
     better_escape = {
       -- добавил сочетание клавиш для выхода из insert мода
-      mapping = { "jk", "ол" },
+      mapping = { "jk", "jj" },
     },
 
     heirline = function(config)
