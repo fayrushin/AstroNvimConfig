@@ -19,6 +19,7 @@ local config = {
     g = {
       mapleader = " ", -- sets vim.g.mapleader
       autopairs_enabled = false, -- enable autopairs at start
+      ui_notifications_enabled = false,
     },
   },
 
