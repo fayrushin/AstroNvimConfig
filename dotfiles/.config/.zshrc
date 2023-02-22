@@ -16,7 +16,7 @@ plugins=(git vi-mode)
 ZSH_THEME="robbyrussell"
 source $ZSH/oh-my-zsh.sh
 bindkey -M viins 'jk' vi-cmd-mode
-# export KEYTIMEOUT=10
+export KEYTIMEOUT=10
 autoload -Uz history-search-end
 
 zle -N history-beginning-search-backward-end history-search-end
