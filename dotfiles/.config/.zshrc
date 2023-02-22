@@ -12,6 +12,8 @@ MODE_INDICATOR="%F{magenta}<<<%f"
 INSERT_MODE_INDICATOR="%F{green}<<<%f"
 plugins=(git vi-mode)
 
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="robbyrussell"
 source $ZSH/oh-my-zsh.sh
 bindkey -M viins 'jk' vi-cmd-mode
 # export KEYTIMEOUT=10
@@ -24,8 +26,6 @@ bindkey -M viins "^N" history-beginning-search-forward-end
 bindkey -M vicmd "^P" history-beginning-search-backward-end
 bindkey -M vicmd "^N" history-beginning-search-forward-end
 
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="robbyrussell"
 
 export EDITOR='nvim'
 
