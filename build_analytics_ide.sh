@@ -2,8 +2,8 @@
 
 docker build --build-arg USER_ID="${UID:-1000}" \
   --build-arg GROUP_ID="${GID:-1000}" \
-  --build-arg BASE_IMAGE=analytics_env \
+  --build-arg BASE_IMAGE=base_analytics \
   --build-arg IMAGE_VERSION=latest \
   --build-arg GIT_USER_NAME="Ravil Fayrushin" \
   --build-arg GIT_USER_EMAIL="ravil.fayrushin@gmail.com" \
-  -f Dockerfile -t analytics_ide .
+  -f Dockerfile -t developer .
