@@ -49,7 +49,6 @@ RUN addgroup --gid $GROUP_ID user && \
   adduser --disabled-password --gecos '' --uid $USER_ID --gid $GROUP_ID user && \
   echo "user:user" | chpasswd && adduser user sudo
 
-RUN chsh -s /usr/bin/zsh user
 
 USER user
 
@@ -83,4 +82,6 @@ RUN if [ ! -z "$GIT_USER_NAME" ] && [ ! -z "$GIT_USER_EMAIL" ]; then \
   git config --global user.email "$GIT_USER_EMAIL"; \
   fi
 
-ENTRYPOINT [ "/usr/bin/zsh" ] 
+ENV SHELL /usr/bin/zsh
+
+ENTRYPOINT ["/usr/bin/zsh" ] 
