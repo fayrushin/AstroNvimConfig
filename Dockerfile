@@ -83,4 +83,4 @@ RUN if [ ! -z "$GIT_USER_NAME" ] && [ ! -z "$GIT_USER_EMAIL" ]; then \
   git config --global user.email "$GIT_USER_EMAIL"; \
   fi
 
-CMD tmux
+ENTRYPOINT [ "/usr/bin/zsh" ] 
