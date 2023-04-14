@@ -12,28 +12,13 @@ This config supports:
 
 1. cmake
 2. lldb
-3. cargo
-4. jq
-5. golang
+3. python
 
-`sudo apt install cargo jq cmake lldb python3 python3-pip`
+`sudo apt install cmake python3 python3-pip`
 
-6. lazygit
-
-`go install github.com/jesseduffield/lazygit@latest`
-
-7. debugpy
-
-`pip install debugpy`
-
-8. nvm + node
-
-```
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash`
-nvm install node
-```
-
-9. nvim
+4. lazygit
+5. nvm + node
+6. nvim
 
 download form [github](https://github.com/neovim/neovim/releases)
 
@@ -49,4 +34,4 @@ Clone my own config to lua user dir
 
 Initialize nvim
 
-`nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'`
+`nvim`

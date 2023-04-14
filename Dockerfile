@@ -11,9 +11,11 @@ ENV TZ=Russia/Moscow
 
 # install developer dependencies
 RUN \
-  add-apt-repository ppa:git-core/ppa \
-  && apt-get update \
+  apt-get update \
   && apt-get -qy upgrade \
+  && apt-get -qy install software-properties-common \
+  && add-apt-repository ppa:git-core/ppa \
+  && apt-get update \
   && apt-get remove -qy git \
   && apt-get install -qy locales python3 python3-pip \
   curl wget git ripgrep unzip python3.8-venv tar gzip tmux \
@@ -28,16 +30,13 @@ RUN \
   && tar xf lazygit.tar.gz lazygit \
   && install lazygit /usr/local/bin \
   && rm -rf lazygit.tar.gz
-  
-RUN \
-  	git clone https://github.com/neovim/neovim --branch v0.9.0 --depth 1 \
-  	&& cd neovim \
-  	&& make CMAKE_BUILD_TYPE=Release \
-  	&& make install \
-  	&& cd /opt && rm -rf neovim
 
 RUN \
-  git clone 
+  git clone https://github.com/neovim/neovim --branch v0.9.0 --depth 1 \
+  && cd neovim \
+  && make CMAKE_BUILD_TYPE=Release \
+  && make install \
+  && cd /opt && rm -rf neovim
 
 # Set the locale
 RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && locale-gen
