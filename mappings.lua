@@ -17,12 +17,12 @@ return {
     },
     -- Trouble diagnostics
     ["<leader>a"] = { name = "Diagnostics" },
-    -- ["<leader>ar"] = { "<cmd>Trouble lsp_references<cr>", desc = "references" },
-    -- ["<leader>at"] = { "<cmd>TroubleToggle<cr>", desc = "trouble" },
-    -- ["<leader>ad"] = { "<cmd>Trouble document_diagnostics<cr>", desc = "document" },
-    -- ["<leader>aw"] = { "<cmd>Trouble workspace_diagnostics<cr>", desc = "workspace" },
-    ["<leader>ar"] = { "<cmd>lua vim.lsp.buf.references()<cr>", desc = "references" },
-    ["<leader>ad"] = { "<cmd>lua vim.diagnostic.setloclist()<cr>", desc = "document" },
+    ["<leader>ar"] = { "<cmd>Trouble lsp_references<cr>", desc = "references" },
+    ["<leader>at"] = { "<cmd>TroubleToggle<cr>", desc = "trouble" },
+    ["<leader>ad"] = { "<cmd>Trouble document_diagnostics<cr>", desc = "document" },
+    ["<leader>aw"] = { "<cmd>Trouble workspace_diagnostics<cr>", desc = "workspace" },
+    -- ["<leader>ar"] = { "<cmd>lua vim.lsp.buf.references()<cr>", desc = "references" },
+    -- ["<leader>ad"] = { "<cmd>lua vim.diagnostic.setloclist()<cr>", desc = "document" },
     -- Diffview
     ["<leader>gd"] = { "<cmd>DiffviewOpen<cr>", desc = "View git diff" },
     ["<leader>gq"] = { "<cmd>DiffviewClose<cr>", desc = "Close git diff" },
