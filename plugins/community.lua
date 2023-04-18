@@ -8,6 +8,7 @@ return {
   -- { import = "astrocommunity.bars-and-lines.heirline-mode-text-statusline" },
   { import = "astrocommunity.bars-and-lines.heirline-vscode-winbar" },
   -- { import = "astrocommunity.debugging.nvim-bqf" },
-  { import = "astrocommunity/editing-support/todo-comments-nvim"},
+  { import = "astrocommunity/editing-support/todo-comments-nvim" },
   -- { import = "astrocommunity.completion.copilot-lua-cmp" },
+  { import = "astrocommunity/markdown-and-latex/glow-nvim" },
 }

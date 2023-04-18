@@ -84,4 +84,4 @@ RUN if [ ! -z "$GIT_USER_NAME" ] && [ ! -z "$GIT_USER_EMAIL" ]; then \
 
 ENV SHELL /usr/bin/zsh
 
-ENTRYPOINT ["/usr/bin/zsh" ] 
+ENTRYPOINT [ "/usr/bin/zsh" ]
