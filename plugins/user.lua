@@ -31,8 +31,8 @@ return {
         configure_args = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" },
         build_args = { "-j 8" },
         quickfix = {
-          pos = "botright",      -- Where to open quickfix
-          height = 10,           -- Height of the opened quickfix.
+          pos = "botright", -- Where to open quickfix
+          height = 10, -- Height of the opened quickfix.
           only_on_error = false, -- Open quickfix window only if target build failed.
         },
         dap_configurations = {
