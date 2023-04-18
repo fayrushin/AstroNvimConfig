@@ -21,52 +21,33 @@ return {
     config = function() require("telescope").load_extension "ui-select" end,
   },
   {
-    "Shatur/neovim-cmake",
+    "Shatur/neovim-tasks",
     dependencies = { "nvim-dap-ui" },
     config = function()
-      require("cmake").setup {
-        cmake_executable = "cmake",
-        save_before_build = true,
-        parameters_file = "neovim.json",
-        configure_args = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" },
-        build_args = { "-j 8" },
-        quickfix = {
-          pos = "botright", -- Where to open quickfix
-          height = 10, -- Height of the opened quickfix.
-          only_on_error = false, -- Open quickfix window only if target build failed.
-        },
-        dap_configurations = {
-          codelldb_vscode = {
-            type = "codelldb",
-            request = "launch",
-            stopOnEntry = false,
-            runInTerminal = false,
-          },
-          lldb_vscode = {
-            type = "lldb",
-            request = "launch",
-            runInTerminal = false,
-          },
-          cppdbg_vscode = {
-            type = "cppdbg",
-            request = "launch",
-            setupCommands = {
-              {
-                description = "Enable pretty-printing",
-                text = "-enable-pretty-printing",
-                ignoreFailures = false,
-              },
+      local Path = require "plenary.path"
+      require("tasks").setup {
+        default_params = {
+          -- Default module parameters with which `neovim.json` will be created.
+          cmake = {
+            cmd = "cmake",
+            build_dir = tostring(Path:new("{cwd}", "build", "{os}-{build_type}")),
+            build_type = "Debug",
+            dap_name = "codelldb",
+            args = {
+              configure = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1", "-G", "Ninja" },
             },
-            stopOnEntry = true,
           },
         },
-        -- dap_configuration = "lldb_vscode",
-        -- dap_configuration = "cppdbg_vscode",
-        dap_configuration = "codelldb_vscode",
+        save_before_run = true, -- If true, all files will be saved before executing a task.
+        params_file = "neovim.json", -- JSON file to store module and task parameters.
+        quickfix = {
+          pos = "botright", -- Default quickfix position.
+          height = 12, -- Default height.
+        },
         dap_open_command = false,
       }
     end,
-    cmd = { "CMake" },
+    cmd = { "Task" },
   },
   {
     "folke/trouble.nvim",
