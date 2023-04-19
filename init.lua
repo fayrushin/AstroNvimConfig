@@ -36,6 +36,14 @@ return {
       disabled = { -- disable formatting capabilities for the listed language servers
         -- "sumneko_lua",
       },
+      filter = function(client)
+        -- only enable jsonls for json files
+        if vim.bo.filetype == "json" then return client.name == "null-ls" end
+        if vim.bo.filetype == "lua" then return client.name == "null-ls" end
+
+        -- enable all other clients
+        return true
+      end,
       timeout_ms = 3000, -- default format timeout
     },
     -- enable servers that you already have installed without mason
