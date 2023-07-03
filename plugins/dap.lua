@@ -9,12 +9,12 @@ return {
         command = "/usr/lib/llvm-10/bin/lldb-vscode", -- adjust as needed, must be absolute path
         name = "lldb",
       }
-      dap.adapters.cppdbg = {
-        id = "cppdbg",
-        type = "executable",
-        request = "launch",
-        command = "/home/user/.local/share/nvim/mason/bin/OpenDebugAD7",
-      }
+      -- dap.adapters.cppdbg = {
+      --   id = "cppdbg",
+      --   type = "executable",
+      --   request = "launch",
+      --   command = "/home/user/.local/share/nvim/mason/bin/OpenDebugAD7",
+      -- }
       dap.configurations.codelldb = {
         type = "codelldb",
         request = "launch",
@@ -35,6 +35,11 @@ return {
             text = "-enable-pretty-printing",
             ignoreFailures = false,
           },
+          -- {
+          --   description = "Enable break on all exceptions",
+          --   text = "catch throw",
+          --   ignoreFailures = true,
+          -- },
         },
         stopOnEntry = true,
       }
