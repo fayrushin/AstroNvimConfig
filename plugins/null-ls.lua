@@ -12,13 +12,13 @@ return {
       -- Set a formatter
       -- null_ls.builtins.formatting.stylua,
       -- https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/lua/null-ls/builtins/formatting/prettier.lua
-      null_ls.builtins.formatting.prettier.with {
-        args = h.range_formatting_args_factory({
-          "--stdin-filepath",
-          "--ignore-path=.prettierignore",
-          "$FILENAME",
-        }, "--range-start", "--range-end", { row_offset = -1, col_offset = -1 }),
-      },
+      -- null_ls.builtins.formatting.prettier.with {
+      --   args = h.range_formatting_args_factory({
+      --     "--stdin-filepath",
+      --     "--ignore-path=.prettierignore",
+      --     "$FILENAME",
+      --   }, "--range-start", "--range-end", { row_offset = -1, col_offset = -1 }),
+      -- },
     }
     return config -- return final config table
   end,
