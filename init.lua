@@ -14,7 +14,7 @@ return {
     },
   },
   -- Set colorscheme to use
-  colorscheme = "dayfox",
+  colorscheme = "nightfox",
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
     virtual_text = false,
