@@ -18,7 +18,7 @@ RUN \
   && apt-get update \
   && apt-get remove -qy git \
   && apt-get install -qy locales python3 python3-pip \
-  curl wget git ripgrep unzip python3.8-venv tar gzip tmux \
+  curl wget git ripgrep unzip python3-venv tar gzip tmux \
   sudo htop zsh tzdata apt-utils xclip ssh git-lfs ninja-build gettext \
   && rm -rf /var/lib/apt/lists/*	
 
@@ -32,7 +32,7 @@ RUN \
   && rm -rf lazygit.tar.gz
 
 RUN \
-  git clone https://github.com/neovim/neovim --branch v0.9.0 --depth 1 \
+  git clone https://github.com/neovim/neovim --branch v0.9.5 --depth 1 \
   && cd neovim \
   && make CMAKE_BUILD_TYPE=Release \
   && make install \
@@ -72,7 +72,7 @@ RUN \
   git clone https://github.com/fayrushin/AstroNvimConfig ~/.config/nvim/lua/user
 
 # copy dotfiles
-COPY --chown=user:user dotfiles/ /home/user/
+# COPY --chown=user:user dotfiles/ /home/user/
 
 ARG GIT_USER_NAME
 ARG GIT_USER_EMAIL
