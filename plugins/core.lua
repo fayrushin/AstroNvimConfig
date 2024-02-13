@@ -9,6 +9,10 @@ return {
     enabled = false,
   },
   {
+    "kevinhwang91/nvim-ufo",
+    enabled = false,
+  },
+  {
     "goolord/alpha-nvim",
     opts = function(_, opts)
       -- customize the dashboard header
