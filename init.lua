@@ -14,7 +14,7 @@ return {
     },
   },
   -- Set colorscheme to use
-  colorscheme = "nightfox",
+  colorscheme = "dayfox",
   -- Diagnostics configuration (for vim.diagnostics.config({...})) when diagnostics are on
   diagnostics = {
     virtual_text = false,
@@ -48,7 +48,7 @@ return {
     },
     -- enable servers that you already have installed without mason
     servers = {
-      -- "clangd"
+      "clangd"
       -- "pyright"
     },
   },
